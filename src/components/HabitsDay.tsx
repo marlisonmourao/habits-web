@@ -3,20 +3,26 @@ import * as Checkbox from '@radix-ui/react-checkbox';
 import clsx from "clsx"
 import { ProgressBar } from "./ProgressBar";
 import { Check } from "phosphor-react";
+import dayjs from "dayjs";
 
 interface HabitsDayProps {
-  completed: number
-  amount: number
+  date: Date
+  completed?: number
+  amount?: number
 }
 
-export function HabitsDay({ amount, completed }: HabitsDayProps) {
-  const completedPercentage = Math.round(( completed / amount) * 100)
+export function HabitsDay({ amount = 0, completed = 0, date }: HabitsDayProps) {
+  const completedPercentage = amount > 0 ? Math.round(( completed / amount) * 100) : 0
+
+  const dayAndMonth = dayjs(date).format('DD/MM')
+  const dayOfWeek = dayjs(date).format('dddd')
 
   return (
     <Popover.Root>
-      <Popover.Trigger className={clsx('w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg', {
-        'bg-violet-900 border-violet-800': completedPercentage === 0,
-        'bg-violet-900 border-violet-700': completedPercentage >= 0 && completedPercentage < 20,
+      <Popover.Trigger 
+      className={clsx('w-10 h-10 border-2 rounded-lg', {
+        'bg-zinc-900 border-zinc-800': completedPercentage === 0,
+        'bg-violet-900 border-violet-700': completedPercentage > 0 && completedPercentage < 20,
         'bg-violet-800 border-violet-600': completedPercentage >= 20 && completedPercentage < 40,
         'bg-violet-700 border-violet-500': completedPercentage >= 40 && completedPercentage < 60,
         'bg-violet-600 border-violet-500': completedPercentage >= 60 && completedPercentage < 80,
@@ -26,8 +32,8 @@ export function HabitsDay({ amount, completed }: HabitsDayProps) {
 
       <Popover.Portal>
         <Popover.Content className="min-w-[320px] w-full p-6 rounded-2xl bg-zinc-900 flex flex-col">
-          <span className="font-semibold text-zinc-400"> quinta-feira </span>
-          <span className="mt-1 font-extrabold leading-tight text-3xl"> 19/01 </span>
+          <span className="font-semibold text-zinc-400"> {dayOfWeek} </span>
+          <span className="mt-1 font-extrabold leading-tight text-3xl"> {dayAndMonth} </span>
 
           <ProgressBar 
             progress={completedPercentage}
