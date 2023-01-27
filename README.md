@@ -17,7 +17,7 @@
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-- [React Native](https://pt-br.reactjs.org/)
+- [React](https://pt-br.reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Node e NPM](https://nodejs.org/)
 - [Tailwindcss](https://tailwindcss.com/docs/installation)
